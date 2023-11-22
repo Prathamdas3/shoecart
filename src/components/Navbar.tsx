@@ -8,7 +8,7 @@ export default function Navbar() {
     <div className="navbar bg-base-100 container mx-auto">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">
-          daisyUI
+          ShoeKart
         </Link>
       </div>
       <div className="flex-none">

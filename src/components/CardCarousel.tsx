@@ -11,9 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/bundle';
 
-import Item1 from '../assets/images/item.jpg';
-import Item2 from '../assets/images/item1.jpg';
-import Item3 from '../assets/images/item2.jpg';
+import { SmallCardData } from '../Data';
 
 export default function CardCarousal() {
   return (
@@ -25,33 +23,11 @@ export default function CardCarousal() {
       scrollbar={{ draggable: true }}
       className="my-4 py-2"
     >
-      <SwiperSlide>
-        <SmallCard title="Item1 " alt="item1 " url={Item1} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <SmallCard title="Item2 " alt="item2 " url={Item2} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <SmallCard title="Item3 " alt="item3 " url={Item3} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <SmallCard title="Item1 " alt="item1 " url={Item1} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <SmallCard title="Item2 " alt="item2 " url={Item2} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <SmallCard title="Item3 " alt="item3 " url={Item3} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <SmallCard title="Item1 " alt="item1 " url={Item1} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <SmallCard title="Item2 " alt="item2 " url={Item2} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <SmallCard title="Item3 " alt="item3 " url={Item3} />
-      </SwiperSlide>
+      {SmallCardData.map((data) => (
+        <SwiperSlide>
+          <SmallCard alt={data.alt} url={data.url} id={data.id} />
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 }

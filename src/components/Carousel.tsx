@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Navigation,
   Pagination,
@@ -10,10 +11,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/bundle';
 
-import Image1 from '../assets/images/image1.jpg';
-import Image2 from '../assets/images/image2.jpg';
-import Image3 from '../assets/images/image3.jpg';
-import Image4 from '../assets/images/image4.jpg';
+import { CarouselData } from '../Data';
+
 export default function Carousel() {
   return (
     <Swiper
@@ -26,18 +25,19 @@ export default function Carousel() {
       // pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
     >
-      <SwiperSlide>
-        <img src={Image1} alt="image 1" className="w-full h-[25rem]" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src={Image2} alt="image 2" className="w-full h-[25rem]" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src={Image3} alt="image 3" className="w-full h-[25rem]" />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src={Image4} alt="image 4" className="w-full h-[25rem]" />
-      </SwiperSlide>
+      {CarouselData.map((data) => (
+        <SwiperSlide>
+          <div className="relative">
+            <Link to={`/details/${data.id}`}>
+              <img src={data.url} alt={data.alt} className="w-full h-[25rem]" />
+              <span className="absolute bottom-0 left-5 z-10 text-white my-2">
+                <h2 className="text-lg font-bold">{data.title}</h2>
+                <p>{data.description}</p>
+              </span>
+            </Link>
+          </div>
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 }
