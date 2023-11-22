@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { useToggle } from '@reactuses/core';
 
 export default function Navbar() {
   const [on, toggle] = useToggle(true);
+  const navigate = useNavigate();
   return (
     <div className="navbar bg-base-100 container mx-auto">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
+        <button onClick={() => navigate('/')} className=" text-2xl font-bold">
           ShoeKart
-        </Link>
+        </button>
       </div>
       <div className="flex-none">
         <button className="" onClick={toggle}>
-          <Search />
+          <Search size={23} />
         </button>
         {on ? (
           <dialog id="my_modal_2" className="modal">

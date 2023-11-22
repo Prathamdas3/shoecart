@@ -18,7 +18,7 @@ export default function Card({ title, alt, url, des, id }: propType) {
         <p>{des}</p>
         <Link
           to={`/details/${id}`}
-          className="font-bold text-lg flex justify-end"
+          className="font-bold text-lg flex justify-end cursor-pointer"
         >
           See more
         </Link>
