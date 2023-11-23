@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { useToggle } from '@reactuses/core';
+import { useCartContextProvider } from '../context/CartContext';
 
 export default function Navbar() {
   const [on, toggle] = useToggle(true);
+  const { totalItems } = useCartContextProvider();
   const navigate = useNavigate();
   return (
     <div className="navbar bg-base-100 container mx-auto">
@@ -32,7 +34,10 @@ export default function Navbar() {
         )}
         <Link to="/cart">
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle">
+            <label
+              tabIndex={0}
+              className="btn btn-ghost btn-circle cursor-pointer"
+            >
               <div className="indicator">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +53,11 @@ export default function Navbar() {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                <span className="badge badge-sm indicator-item">{}</span>
+                {totalItems > 0 && (
+                  <span className="badge badge-sm indicator-item text-primary">
+                    {totalItems}
+                  </span>
+                )}
               </div>
             </label>
           </div>

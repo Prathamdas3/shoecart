@@ -216,3 +216,9 @@ export const SmallCardData: DataType = [
     url: CardProduct10,
   },
 ];
+
+export const allData: DataType = [
+  ...BigCardData,
+  ...SmallCardData,
+  ...CarouselData,
+];

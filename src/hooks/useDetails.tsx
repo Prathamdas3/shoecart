@@ -1,4 +1,4 @@
-import { BigCardData, SmallCardData, CarouselData } from '../Data';
+import { allData } from '../Data';
 type DataType = {
   id: string | any;
   title: string;
@@ -7,22 +7,14 @@ type DataType = {
   alt: string;
   url: string;
 }[];
-export default function useDetails(id: string | undefined) {
+export default function useDetails() {
+  const id = localStorage.getItem('id');
   const data: DataType = [];
-  BigCardData.map((details) => {
+  allData.map((details) => {
     if (details.id === id) {
       data.push(details);
     }
   });
-  SmallCardData.map((details) => {
-    if (details.id === id) {
-      data.push(details);
-    }
-  });
-  CarouselData.map((details) => {
-    if (details.id === id) {
-      data.push(details);
-    }
-  });
+
   return data[0];
 }
