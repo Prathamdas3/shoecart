@@ -24,18 +24,18 @@ export default function DetailsPage() {
     addToCart(id !== undefined ? id : '');
   };
   return (
-    <div className="card lg:card-side bg-base-100 shadow-2xl container mx-auto mt-5 w-full min-h-[90vh] ">
+    <div className="card lg:card-side bg-base-100 shadow-2xl container mx-auto  mt-5 w-full ">
       {data && (
         <>
-          <figure className="w-[60%]">
-            <img src={data.url} alt="Album" className="h-full" />
+          <figure className="w-[60%] ">
+            <img src={data.url} alt="Album" className="max-h-[88vh]" />
           </figure>
           <div className="card-body w-[50%]">
             <h2 className="card-title">{data.title}</h2>
             <p>{data.description}</p>
-            <div className="flex justify-center card-action ">
+            <div className="flex justify-around card-action ">
               <button
-                className="btn btn-ghost justify-start"
+                className="btn btn-ghost "
                 onClick={() => addToCart(id !== undefined ? id : '')}
               >
                 <Plus />

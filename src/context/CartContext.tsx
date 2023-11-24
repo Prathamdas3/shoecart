@@ -14,6 +14,8 @@ type ApiType = {
   addToCart: (itemId: string) => void;
   removeFromCart: (itemId: string) => void;
   deleteFromCart: (itemId: string) => void;
+  manualUpdateItemNumber: (itemId: string, itemNumber: number) => void;
+  getTotalAmount: () => number;
   totalItems: number;
 };
 
@@ -45,12 +47,6 @@ export const ContextProvider = ({ children }: childT) => {
     defaultCartItems()
   );
 
-  // allData.map((data) => {
-  //   if (cartItems[data.id] !== 0) {
-  //     setTotalItems(totalItems + cartItems[data.id]);
-  //   }
-  // });
-
   const addToCart = (itemId: string) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     setTotalItems(totalItems + 1);
@@ -64,7 +60,26 @@ export const ContextProvider = ({ children }: childT) => {
   };
 
   const deleteFromCart = (itemId: string) => {
+    setTotalItems(totalItems - cartItems[itemId]);
     setCartItems((prev) => ({ ...prev, [itemId]: 0 }));
+  };
+
+  const manualUpdateItemNumber = (itemId: string, itemNumber: number) => {
+    setCartItems((prev) => ({ ...prev, [itemId]: itemNumber }));
+    setTotalItems(totalItems + itemNumber - 1);
+  };
+
+  const getTotalAmount = (): number => {
+    let totalAmount = 0;
+    for (const item in cartItems) {
+      if (cartItems[item] > 0) {
+        let itemInfo = allData.find((product) => product.id === item);
+        if (itemInfo !== undefined) {
+          totalAmount += cartItems[item] * itemInfo.price;
+        }
+      }
+    }
+    return totalAmount;
   };
   const data = {
     cartItems,
@@ -72,6 +87,8 @@ export const ContextProvider = ({ children }: childT) => {
     removeFromCart,
     totalItems,
     deleteFromCart,
+    manualUpdateItemNumber,
+    getTotalAmount,
   };
   return <cartContext.Provider value={data}>{children}</cartContext.Provider>;
 };

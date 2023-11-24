@@ -17,16 +17,25 @@ interface Data {
 
 export default function CartCard({ data }: Data) {
   const navigate = useNavigate();
-  const { cartItems, addToCart, removeFromCart, deleteFromCart } =
-    useCartContextProvider();
+  const {
+    cartItems,
+    addToCart,
+    removeFromCart,
+    deleteFromCart,
+    manualUpdateItemNumber,
+  } = useCartContextProvider();
 
-  let numberOfItems: number | false =
-    data.id !== undefined && cartItems !== undefined && cartItems[data.id];
+  let numberOfItems: number = 0;
+  if (data.id !== undefined && cartItems !== undefined)
+    numberOfItems = cartItems[data.id];
 
   return (
-    <div className="card card-side bg-base-100 shadow-xl my-2">
-      <figure onClick={() => navigate(`/details/${data.id}`)}>
-        <img src={data.url} alt="Movie" />
+    <div className="card card-side bg-base-100 mx-auto shadow-xl my-2 h-72 w-[70%]">
+      <figure
+        onClick={() => navigate(`/details/${data.id}`)}
+        className="w-[50%] "
+      >
+        <img src={data.url} alt="Movie" className="focus" />
       </figure>
       <div className="card-body">
         <h2
@@ -38,16 +47,21 @@ export default function CartCard({ data }: Data) {
         <p onClick={() => navigate(`/details/${data.id}`)}>
           {data.description}
         </p>
-        <div className="flex justify-center card-action ">
+        <p className="font-bold text-xl">${data.price}</p>
+        <div className="flex justify-between card-action ">
           <button
-            className="btn btn-ghost justify-start"
+            className="btn btn-ghost "
             onClick={() => addToCart(data.id && data.id)}
           >
             <Plus />
           </button>
-          <div className="flex items-center justify-center px-5">
-            {numberOfItems}
-          </div>
+          <input
+            className="input input-ghost w-[58px] max-w-xs "
+            value={numberOfItems}
+            onChange={(e) =>
+              manualUpdateItemNumber(data.id && data.id, Number(e.target.value))
+            }
+          />
           <button
             className="btn btn-ghost"
             onClick={() => removeFromCart(data.id && data.id)}
@@ -57,7 +71,7 @@ export default function CartCard({ data }: Data) {
         </div>
         <div className="card-actions justify-end">
           <button
-            className="btn btn-error"
+            className="btn btn-error w-full text-white text-xl"
             onClick={() => deleteFromCart(data.id && data.id)}
           >
             Delete
