@@ -27,8 +27,14 @@ export default function CartPage() {
   return (
     <div className="container mx-auto">
       {totalItems === 0 ? (
-        <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="flex flex-col justify-center items-center min-h-screen gap-4">
           <h1 className="text-2xl font-bold">Your cart is empty</h1>
+          <button
+            className="btn btn-primary text-white rounded-5xl w-1/3 text-xl font-bold"
+            onClick={() => navigate('/')}
+          >
+            Add items
+          </button>
         </div>
       ) : (
         <div className="flex flex-col justify-center">
