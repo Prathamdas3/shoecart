@@ -7,10 +7,11 @@ type childT = {
 };
 
 type ApiType = {
-  cartItems?: { [key: string]: number };
+  cartItems: { [key: string]: number };
   setCartItems?: React.Dispatch<
     React.SetStateAction<{ [key: string]: number }>
   >;
+
   addToCart: (itemId: string) => void;
   removeFromCart: (itemId: string) => void;
   deleteFromCart: (itemId: string) => void;
@@ -23,10 +24,10 @@ type ApiType = {
 const cartContext = createContext<ApiType | null>(null);
 
 //functions
-let cart: { [id: string]: number } = {};
+
 const defaultCartItems = (): { [key: string]: number } => {
   let idList: string[] = [];
-
+  let cart: { [id: string]: number } = {};
   allData.map((data) => {
     idList.push(data.id);
   });

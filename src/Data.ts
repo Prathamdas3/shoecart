@@ -1,4 +1,4 @@
-import { uuid as uuidv4 } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 import Carousel1 from './assets/images/carouselImages/carousel1.jpg';
 import Carousel2 from './assets/images/carouselImages/carousel2.jpg';

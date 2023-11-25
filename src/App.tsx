@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import CartPage from './pages/CartPage';
 import DetailsPage from './pages/DetailsPage';
+import WishListPage from './pages/WishListPage';
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/details/:id" element={<DetailsPage />} />
+        <Route path="/wish" element={<WishListPage />} />
       </Routes>
     </>
   );
