@@ -1,57 +1,43 @@
-import { useNavigate } from 'react-router-dom';
-import { useCartContextProvider } from '../context/CartContext';
-import { Plus, Minus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'
+import { useCartContextProvider } from '../context/CartContext'
+import { Plus, Minus } from 'lucide-react'
+import { DataT } from '../types'
 
-type DataType = {
-  id: string | any;
-  title: string;
-  description: string;
-  price: number;
-  alt: string;
-  url: string;
-};
-
-interface Data {
-  data: DataType;
-}
-
-export default function CartCard({ data }: Data) {
-  const navigate = useNavigate();
+export default function CartCard({
+  id,
+  title,
+  description,
+  price,
+  alt,
+  url,
+}: DataT) {
+  const navigate = useNavigate()
   const {
     cartItems,
     addToCart,
     removeFromCart,
     deleteFromCart,
     manualUpdateItemNumber,
-  } = useCartContextProvider();
+  } = useCartContextProvider()
 
-  let numberOfItems: number = 0;
-  if (data.id !== undefined && cartItems !== undefined)
-    numberOfItems = cartItems[data.id];
+  let numberOfItems: number = 0
+  if (id !== undefined && cartItems !== undefined) numberOfItems = cartItems[id]
 
   return (
     <div className="card card-side bg-base-100 mx-auto shadow-xl my-2 h-72 w-[70%]">
-      <figure
-        onClick={() => navigate(`/details/${data.id}`)}
-        className="w-[50%] "
-      >
-        <img src={data.url} alt="Movie" className="focus" />
+      <figure onClick={() => navigate(`/details/${id}`)} className="w-[50%] ">
+        <img src={url} alt={alt} className="focus" />
       </figure>
       <div className="card-body">
-        <h2
-          className="card-title"
-          onClick={() => navigate(`/details/${data.id}`)}
-        >
-          {data.title}
+        <h2 className="card-title" onClick={() => navigate(`/details/${id}`)}>
+          {title}
         </h2>
-        <p onClick={() => navigate(`/details/${data.id}`)}>
-          {data.description}
-        </p>
-        <p className="font-bold text-xl">${data.price}</p>
+        <p onClick={() => navigate(`/details/${id}`)}>{description}</p>
+        <p className="font-bold text-xl">${price}</p>
         <div className="flex justify-between card-action ">
           <button
             className="btn btn-ghost "
-            onClick={() => addToCart(data.id && data.id)}
+            onClick={() => addToCart(id && id)}
           >
             <Plus />
           </button>
@@ -59,12 +45,12 @@ export default function CartCard({ data }: Data) {
             className="input input-ghost w-[58px] max-w-xs "
             value={numberOfItems}
             onChange={(e) =>
-              manualUpdateItemNumber(data.id && data.id, Number(e.target.value))
+              manualUpdateItemNumber(id && id, Number(e.target.value))
             }
           />
           <button
             className="btn btn-ghost"
-            onClick={() => removeFromCart(data.id && data.id)}
+            onClick={() => removeFromCart(id && id)}
           >
             <Minus />
           </button>
@@ -72,12 +58,12 @@ export default function CartCard({ data }: Data) {
         <div className="card-actions justify-end">
           <button
             className="btn btn-error w-full text-white text-xl"
-            onClick={() => deleteFromCart(data.id && data.id)}
+            onClick={() => deleteFromCart(id && id)}
           >
             Delete
           </button>
         </div>
       </div>
     </div>
-  );
+  )
 }

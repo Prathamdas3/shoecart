@@ -1,54 +1,39 @@
-import { useNavigate } from 'react-router-dom';
-import { useWishContextProvider } from '../context/WishListContext';
+import { useNavigate } from 'react-router-dom'
+import { useWishContextProvider } from '../context/WishListContext'
+import { DataT } from '../types'
 
-type DataType = {
-  id: string | any;
-  title: string;
-  description: string;
-  price: number;
-  alt: string;
-  url: string;
-};
-
-interface Data {
-  data: DataType;
-}
-
-export default function CartCard({ data }: Data) {
-  const navigate = useNavigate();
-  const { setBucketItems } = useWishContextProvider();
+export default function CartCard({
+  id,
+  title,
+  description,
+  price,
+  alt,
+  url,
+}: DataT) {
+  const navigate = useNavigate()
+  const { setBucketItems } = useWishContextProvider()
 
   return (
     <div className="card card-side bg-base-100 mx-auto shadow-xl my-2 h-72 w-[70%]">
-      <figure
-        onClick={() => navigate(`/details/${data.id}`)}
-        className="w-[50%] "
-      >
-        <img src={data.url} alt="Movie" className="focus" />
+      <figure onClick={() => navigate(`/details/${id}`)} className="w-[50%] ">
+        <img src={url} alt={alt} className="focus" />
       </figure>
       <div className="card-body">
-        <h2
-          className="card-title"
-          onClick={() => navigate(`/details/${data.id}`)}
-        >
-          {data.title}
+        <h2 className="card-title" onClick={() => navigate(`/details/${id}`)}>
+          {title}
         </h2>
-        <p onClick={() => navigate(`/details/${data.id}`)}>
-          {data.description}
-        </p>
-        <p className="font-bold text-xl">${data.price}</p>
+        <p onClick={() => navigate(`/details/${id}`)}>{description}</p>
+        <p className="font-bold text-xl">${price}</p>
 
         <div className="card-actions justify-end">
           <button
             className="btn btn-error w-full text-white text-xl"
-            onClick={() =>
-              setBucketItems((prev) => ({ ...prev, [data.id]: 0 }))
-            }
+            onClick={() => setBucketItems((prev) => ({ ...prev, [id]: 0 }))}
           >
             Delete
           </button>
         </div>
       </div>
     </div>
-  );
+  )
 }

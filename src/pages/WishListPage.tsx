@@ -1,28 +1,20 @@
-import { useNavigate } from 'react-router-dom';
-import { useWishContextProvider } from '../context/WishListContext';
-import WishCard from '../components/WishCard';
-import { allData } from '../Data';
-
-type DataType = {
-  id: string | any;
-  title: string;
-  description: string;
-  price: number;
-  alt: string;
-  url: string;
-}[];
+import { useNavigate } from 'react-router-dom'
+import { useWishContextProvider } from '../context/WishListContext'
+import WishCard from '../components/WishCard'
+import { allData } from '../Data'
+import { DataType } from '../types'
 
 export default function CartPage() {
-  const { bucketItems, totalItems } = useWishContextProvider();
-  const cartList: DataType = [];
-  const navigate = useNavigate();
+  const { bucketItems, totalItems } = useWishContextProvider()
+  const cartList: DataType = []
+  const navigate = useNavigate()
 
   bucketItems &&
     allData.map((product) => {
       if (bucketItems[product.id] !== 0) {
-        cartList.push(product);
+        cartList.push(product)
       }
-    });
+    })
 
   return (
     <div className="container mx-auto">
@@ -42,10 +34,10 @@ export default function CartPage() {
             Your wish List Items
           </h1>
           {cartList.map((product) => (
-            <WishCard key={product.id} data={product} />
+            <WishCard key={product.id} {...product} />
           ))}
         </div>
       )}
     </div>
-  );
+  )
 }
