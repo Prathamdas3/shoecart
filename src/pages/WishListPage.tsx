@@ -34,7 +34,7 @@ export default function CartPage() {
             Your wish List Items
           </h1>
           {cartList.map((product) => (
-            <WishCard key={product.id} data={product} />
+            <WishCard key={product.id} {...product} />
           ))}
         </div>
       )}

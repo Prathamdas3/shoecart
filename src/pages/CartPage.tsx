@@ -1,22 +1,20 @@
-import { useNavigate } from 'react-router-dom';
-import { useCartContextProvider } from '../context/CartContext';
-import CartCard from '../components/CartCard';
-import { allData } from '../Data';
-import { DataType } from '../types';
-
-
+import { useNavigate } from 'react-router-dom'
+import { useCartContextProvider } from '../context/CartContext'
+import CartCard from '../components/CartCard'
+import { allData } from '../Data'
+import { DataType } from '../types'
 
 export default function CartPage() {
-  const { totalItems, cartItems, getTotalAmount } = useCartContextProvider();
-  const cartList: DataType = [];
-  const navigate = useNavigate();
+  const { totalItems, cartItems, getTotalAmount } = useCartContextProvider()
+  const cartList: DataType = []
+  const navigate = useNavigate()
 
   cartItems &&
     allData.map((product) => {
       if (cartItems[product.id] !== 0) {
-        cartList.push(product);
+        cartList.push(product)
       }
-    });
+    })
 
   return (
     <div className="container mx-auto">
@@ -36,7 +34,7 @@ export default function CartPage() {
             Your Cart Items
           </h1>
           {cartList.map((product) => (
-            <CartCard key={product.id} data={product} />
+            <CartCard key={product.id} {...product} />
           ))}
 
           <hr className="mx-auto w-3/4 border-gray-600 mt-3" />
@@ -60,5 +58,5 @@ export default function CartPage() {
         </div>
       )}
     </div>
-  );
+  )
 }
