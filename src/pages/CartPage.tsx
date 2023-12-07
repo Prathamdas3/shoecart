@@ -2,15 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { useCartContextProvider } from '../context/CartContext';
 import CartCard from '../components/CartCard';
 import { allData } from '../Data';
+import { DataType } from '../types';
 
-type DataType = {
-  id: string | any;
-  title: string;
-  description: string;
-  price: number;
-  alt: string;
-  url: string;
-}[];
+
 
 export default function CartPage() {
   const { totalItems, cartItems, getTotalAmount } = useCartContextProvider();

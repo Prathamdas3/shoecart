@@ -36,19 +36,26 @@ export default function DetailsPage() {
           <div className="card-body w-[50%]">
             <h2 className="card-title">{data.title}</h2>
             <p>{data.description}</p>
-            {bucketItems[id !== undefined ? id : ''] !== 0 ? (
-              <ShoppingBag
-                onClick={() => toggleWishListButton(id !== undefined ? id : '')}
-                fill="white"
-                stroke="gray"
-                className="cursor-pointer"
-              />
-            ) : (
-              <ShoppingBag
-                onClick={() => toggleWishListButton(id !== undefined ? id : '')}
-                className="cursor-pointer"
-              />
-            )}
+            <div className="justify-end">
+              {bucketItems[id !== undefined ? id : ''] !== 0 ? (
+                <ShoppingBag
+                  onClick={() =>
+                    toggleWishListButton(id !== undefined ? id : '')
+                  }
+                  fill="white"
+                  stroke="gray"
+                  className="cursor-pointer"
+                />
+              ) : (
+                <ShoppingBag
+                  onClick={() =>
+                    toggleWishListButton(id !== undefined ? id : '')
+                  }
+                  className="cursor-pointer"
+                />
+              )}
+            </div>
+
             <div className="flex justify-around card-action ">
               <button
                 className="btn btn-ghost "
