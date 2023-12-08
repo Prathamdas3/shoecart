@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useWishContextProvider } from '../context/WishListContext'
 import WishCard from '../components/WishCard'
-import { allData } from '../Data'
+import { allData } from '../db/Data'
 import { DataType } from '../types'
 
 export default function CartPage() {

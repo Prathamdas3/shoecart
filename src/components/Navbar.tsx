@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Search, ShoppingBag, ShoppingCart, X } from 'lucide-react'
+import { Search, ShoppingBag, ShoppingCart, X, Menu } from 'lucide-react'
 import { useCartContextProvider } from '../context/CartContext'
-import { allData } from '../Data'
+import { useCategoryContextProvider } from '../context/CategoryContext'
+import { allData } from '../db/Data'
 import { DataType } from '../types'
 
 export default function Navbar() {
   const { totalItems } = useCartContextProvider()
+  const { isCategoryMenuOpen, setIsCategoryMenuOpen } =
+    useCategoryContextProvider()
   const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false)
   const [filterData, setFilterData] = useState<DataType>([])
 
@@ -16,6 +19,15 @@ export default function Navbar() {
       setFilterData([])
     } else {
       setIsSearchModalOpen(true)
+    }
+  }
+
+  const toggleCategoriesMenu = () => {
+    if (isCategoryMenuOpen) {
+      setIsCategoryMenuOpen(false)
+      setFilterData([])
+    } else {
+      setIsCategoryMenuOpen(true)
     }
   }
 
@@ -35,7 +47,7 @@ export default function Navbar() {
           ShoeKart
         </button>
       </div>
-      <div className="flex-none">
+      <div className={`gap-2 `}>
         {isSearchModalOpen && (
           <div className="flex justify-center gap-2 ">
             <input
@@ -58,34 +70,44 @@ export default function Navbar() {
             )}
           </div>
         )}
-        <button className="cursor-pointer ml-2">
+        <button className="cursor-pointer flex justify-center items-center">
           {isSearchModalOpen ? (
             <X size={23} onClick={toggleModal} />
           ) : (
-            <Search size={23} onClick={toggleModal} />
+            <Search size={22} onClick={toggleModal} />
           )}
         </button>
 
-        <Link to="/cart">
-          <div className="dropdown dropdown-end">
-            <label
-              tabIndex={0}
-              className="btn btn-ghost btn-circle cursor-pointer"
-            >
-              <div className="indicator">
-                <ShoppingCart size={23} />
-                {totalItems > 0 && (
-                  <span className="badge badge-sm indicator-item text-primary">
-                    {totalItems}
-                  </span>
-                )}
-              </div>
-            </label>
-          </div>
-        </Link>
-        <Link to={'/wish'}>
+        <div className="indicator">
+          <button
+            onClick={() => navigate('/cart')}
+            className="flex justify-center items-center"
+          >
+            <ShoppingCart size={22} />
+          </button>
+
+          {totalItems > 0 && (
+            <span className="badge badge-sm indicator-item text-primary">
+              {totalItems}
+            </span>
+          )}
+        </div>
+
+        <button
+          onClick={() => navigate('/wish')}
+          className="flex justify-center items-center "
+        >
           <ShoppingBag size={20} />
-        </Link>
+        </button>
+
+        <button className="flex justify-center items-center ">
+          <Menu
+            size={23}
+            onClick={toggleCategoriesMenu}
+            className="cursor-pointer"
+          />
+        </button>
+
         {/* <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">

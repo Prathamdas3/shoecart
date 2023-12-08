@@ -1,5 +1,5 @@
 import { useState, createContext, useContext } from 'react'
-import { allData } from '../Data'
+import { allData } from '../db/Data'
 import { childT, CartType } from '../types'
 
 // context creation

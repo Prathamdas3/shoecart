@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useCartContextProvider } from '../context/CartContext'
 import CartCard from '../components/CartCard'
-import { allData } from '../Data'
+import { allData } from '../db/Data'
 import { DataType } from '../types'
 
 export default function CartPage() {
