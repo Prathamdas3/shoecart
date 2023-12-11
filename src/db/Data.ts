@@ -1,38 +1,38 @@
-import { uuid as uuidv4 } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid'
 
-import Carousel1 from './assets/images/carouselImages/carousel1.jpg';
-import Carousel2 from './assets/images/carouselImages/carousel2.jpg';
-import Carousel3 from './assets/images/carouselImages/carousel3.jpg';
-import Carousel4 from './assets/images/carouselImages/carousel4.jpg';
+import Carousel1 from '../assets/images/carouselImages/carousel1.jpg'
+import Carousel2 from '../assets/images/carouselImages/carousel2.jpg'
+import Carousel3 from '../assets/images/carouselImages/carousel3.jpg'
+import Carousel4 from '../assets/images/carouselImages/carousel4.jpg'
 
-import Product1 from './assets/images/productImage/product1.jpg';
-import Product2 from './assets/images/productImage/product2.jpg';
-import Product3 from './assets/images/productImage/product3.jpg';
-import Product4 from './assets/images/productImage/product4.jpg';
-import Product5 from './assets/images/productImage/product5.jpg';
-import Product6 from './assets/images/productImage/product6.jpg';
-import Product7 from './assets/images/productImage/product7.jpg';
-import Product8 from './assets/images/productImage/product8.jpg';
+import Product1 from '../assets/images/productImage/product1.jpg'
+import Product2 from '../assets/images/productImage/product2.jpg'
+import Product3 from '../assets/images/productImage/product3.jpg'
+import Product4 from '../assets/images/productImage/product4.jpg'
+import Product5 from '../assets/images/productImage/product5.jpg'
+import Product6 from '../assets/images/productImage/product6.jpg'
+import Product7 from '../assets/images/productImage/product7.jpg'
+import Product8 from '../assets/images/productImage/product8.jpg'
 
-import CardProduct1 from './assets/images/cardImages/card1.jpg';
-import CardProduct2 from './assets/images/cardImages/card2.jpg';
-import CardProduct3 from './assets/images/cardImages/card3.jpg';
-import CardProduct4 from './assets/images/cardImages/card4.jpg';
-import CardProduct5 from './assets/images/cardImages/card5.jpg';
-import CardProduct6 from './assets/images/cardImages/card6.jpg';
-import CardProduct7 from './assets/images/cardImages/card7.jpg';
-import CardProduct8 from './assets/images/cardImages/card8.jpg';
-import CardProduct9 from './assets/images/cardImages/card9.jpg';
-import CardProduct10 from './assets/images/cardImages/card10.jpg';
+import CardProduct1 from '../assets/images/cardImages/card1.jpg'
+import CardProduct2 from '../assets/images/cardImages/card2.jpg'
+import CardProduct3 from '../assets/images/cardImages/card3.jpg'
+import CardProduct4 from '../assets/images/cardImages/card4.jpg'
+import CardProduct5 from '../assets/images/cardImages/card5.jpg'
+import CardProduct6 from '../assets/images/cardImages/card6.jpg'
+import CardProduct7 from '../assets/images/cardImages/card7.jpg'
+import CardProduct8 from '../assets/images/cardImages/card8.jpg'
+import CardProduct9 from '../assets/images/cardImages/card9.jpg'
+import CardProduct10 from '../assets/images/cardImages/card10.jpg'
 
 type DataType = {
-  id: string | any;
-  title: string;
-  description: string;
-  price: number;
-  alt: string;
-  url: string;
-}[];
+  id: string | any
+  title: string
+  description: string
+  price: number
+  alt: string
+  url: string
+}[]
 
 export const CarouselData: DataType = [
   {
@@ -67,7 +67,7 @@ export const CarouselData: DataType = [
     alt: 'Carousel images',
     url: Carousel4,
   },
-];
+]
 export const BigCardData: DataType = [
   {
     id: uuidv4(),
@@ -133,7 +133,7 @@ export const BigCardData: DataType = [
     alt: 'Item images',
     url: Product8,
   },
-];
+]
 export const SmallCardData: DataType = [
   {
     id: uuidv4(),
@@ -215,10 +215,10 @@ export const SmallCardData: DataType = [
     alt: 'Card Item images',
     url: CardProduct10,
   },
-];
+]
 
 export const allData: DataType = [
   ...BigCardData,
   ...SmallCardData,
   ...CarouselData,
-];
+]

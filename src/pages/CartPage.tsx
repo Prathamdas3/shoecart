@@ -1,34 +1,32 @@
-import { useNavigate } from 'react-router-dom';
-import { useCartContextProvider } from '../context/CartContext';
-import CartCard from '../components/CartCard';
-import { allData } from '../Data';
-
-type DataType = {
-  id: string | any;
-  title: string;
-  description: string;
-  price: number;
-  alt: string;
-  url: string;
-}[];
+import { useNavigate } from 'react-router-dom'
+import { useCartContextProvider } from '../context/CartContext'
+import CartCard from '../components/CartCard'
+import { allData } from '../db/Data'
+import { DataType } from '../types'
 
 export default function CartPage() {
-  const { totalItems, cartItems, getTotalAmount } = useCartContextProvider();
-  const cartList: DataType = [];
-  const navigate = useNavigate();
+  const { totalItems, cartItems, getTotalAmount } = useCartContextProvider()
+  const cartList: DataType = []
+  const navigate = useNavigate()
 
   cartItems &&
     allData.map((product) => {
       if (cartItems[product.id] !== 0) {
-        cartList.push(product);
+        cartList.push(product)
       }
-    });
+    })
 
   return (
     <div className="container mx-auto">
       {totalItems === 0 ? (
-        <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="flex flex-col justify-center items-center min-h-screen gap-4">
           <h1 className="text-2xl font-bold">Your cart is empty</h1>
+          <button
+            className="btn btn-primary text-white rounded-5xl w-1/3 text-xl font-bold"
+            onClick={() => navigate('/')}
+          >
+            Add items
+          </button>
         </div>
       ) : (
         <div className="flex flex-col justify-center">
@@ -36,7 +34,7 @@ export default function CartPage() {
             Your Cart Items
           </h1>
           {cartList.map((product) => (
-            <CartCard key={product.id} data={product} />
+            <CartCard key={product.id} {...product} />
           ))}
 
           <hr className="mx-auto w-3/4 border-gray-600 mt-3" />
@@ -60,5 +58,5 @@ export default function CartPage() {
         </div>
       )}
     </div>
-  );
+  )
 }

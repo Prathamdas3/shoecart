@@ -1,9 +1,5 @@
-import { Link } from 'react-router-dom';
-interface propType {
-  alt: string;
-  url: string;
-  id: string;
-}
+import { Link } from 'react-router-dom'
+import { propType } from '../types'
 
 export default function SmallCard({ alt, url, id }: propType) {
   return (
@@ -14,5 +10,5 @@ export default function SmallCard({ alt, url, id }: propType) {
         </figure>
       </Link>
     </div>
-  );
+  )
 }

@@ -1,13 +1,45 @@
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { Search } from 'lucide-react';
-import { useToggle } from '@reactuses/core';
-import { useCartContextProvider } from '../context/CartContext';
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Search, ShoppingBag, ShoppingCart, X, Menu } from 'lucide-react'
+import { useCartContextProvider } from '../context/CartContext'
+import { useCategoryContextProvider } from '../context/CategoryContext'
+import { allData } from '../db/Data'
+import { DataType } from '../types'
 
 export default function Navbar() {
-  const [on, toggle] = useToggle(true);
-  const { totalItems } = useCartContextProvider();
-  const navigate = useNavigate();
+  const { totalItems } = useCartContextProvider()
+  const { isCategoryMenuOpen, setIsCategoryMenuOpen } =
+    useCategoryContextProvider()
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false)
+  const [filterData, setFilterData] = useState<DataType>([])
+
+  const toggleModal = () => {
+    if (isSearchModalOpen) {
+      setIsSearchModalOpen(false)
+      setFilterData([])
+    } else {
+      setIsSearchModalOpen(true)
+    }
+  }
+
+  const toggleCategoriesMenu = () => {
+    if (isCategoryMenuOpen) {
+      setIsCategoryMenuOpen(false)
+      setFilterData([])
+    } else {
+      setIsCategoryMenuOpen(true)
+    }
+  }
+
+  const handleSearch = (e: any) => {
+    const wordEntered = e.target.value
+    const filteredData = allData.filter((data) => {
+      return data.title.toLowerCase().includes(wordEntered.toLowerCase())
+    })
+    wordEntered === '' ? setFilterData([]) : setFilterData(filteredData)
+  }
+
+  const navigate = useNavigate()
   return (
     <div className="navbar bg-base-100 container mx-auto">
       <div className="flex-1">
@@ -15,53 +47,67 @@ export default function Navbar() {
           ShoeKart
         </button>
       </div>
-      <div className="flex-none">
-        <button className="" onClick={toggle}>
-          <Search size={23} />
-        </button>
-        {on ? (
-          <dialog id="my_modal_2" className="modal">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">Hello!</h3>
-              <p className="py-4">Press ESC key or click outside to close</p>
-            </div>
-            <form method="dialog" className="modal-backdrop">
-              <button>close</button>
-            </form>
-          </dialog>
-        ) : (
-          <Search />
-        )}
-        <Link to="/cart">
-          <div className="dropdown dropdown-end">
-            <label
-              tabIndex={0}
-              className="btn btn-ghost btn-circle cursor-pointer"
-            >
-              <div className="indicator">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                {totalItems > 0 && (
-                  <span className="badge badge-sm indicator-item text-primary">
-                    {totalItems}
-                  </span>
-                )}
+      <div className={`gap-2 `}>
+        {isSearchModalOpen && (
+          <div className="flex justify-center gap-2 ">
+            <input
+              type="text"
+              placeholder="Type here"
+              className="input input-ghost w-full max-w-xs focus:outline-none focus:border-none"
+              onChange={handleSearch}
+            />
+            {filterData.length !== 0 && (
+              <div className=" absolute z-50 rounded-sm mt-10 ml-10 h-[15rem] overflow-y-auto overflow-x-hidden flex justify-center flex-col w-[13%] bg-slate-700 ">
+                {filterData.map((value) => (
+                  <Link
+                    to={`/details/${value.id}`}
+                    className="w-full mx-auto border border-slate-600 px-4 py-2  "
+                  >
+                    <p>{value.title}</p>
+                  </Link>
+                ))}
               </div>
-            </label>
+            )}
           </div>
-        </Link>
+        )}
+        <button className="cursor-pointer flex justify-center items-center">
+          {isSearchModalOpen ? (
+            <X size={23} onClick={toggleModal} />
+          ) : (
+            <Search size={22} onClick={toggleModal} />
+          )}
+        </button>
+
+        <div className="indicator">
+          <button
+            onClick={() => navigate('/cart')}
+            className="flex justify-center items-center"
+          >
+            <ShoppingCart size={22} />
+          </button>
+
+          {totalItems > 0 && (
+            <span className="badge badge-sm indicator-item text-primary">
+              {totalItems}
+            </span>
+          )}
+        </div>
+
+        <button
+          onClick={() => navigate('/wish')}
+          className="flex justify-center items-center "
+        >
+          <ShoppingBag size={20} />
+        </button>
+
+        <button className="flex justify-center items-center ">
+          <Menu
+            size={23}
+            onClick={toggleCategoriesMenu}
+            className="cursor-pointer"
+          />
+        </button>
+
         {/* <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
@@ -91,5 +137,5 @@ export default function Navbar() {
         </div> */}
       </div>
     </div>
-  );
+  )
 }

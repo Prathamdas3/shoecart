@@ -1,20 +1,14 @@
-import { allData } from '../Data';
-type DataType = {
-  id: string | any;
-  title: string;
-  description: string;
-  price: number;
-  alt: string;
-  url: string;
-}[];
+import { allData } from '../db/Data'
+import { DataType } from '../types'
+
 export default function useDetails() {
-  const id = localStorage.getItem('id');
-  const data: DataType = [];
+  const id = localStorage.getItem('id')
+  const data: DataType = []
   allData.map((details) => {
     if (details.id === id) {
-      data.push(details);
+      data.push(details)
     }
-  });
+  })
 
-  return data[0];
+  return data[0]
 }

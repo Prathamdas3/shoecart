@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import useDetails from '../hooks/useDetails';
 import { useCartContextProvider } from '../context/CartContext';
-import { Plus, Minus } from 'lucide-react';
+import { useWishContextProvider } from '../context/WishListContext';
+import { Plus, Minus, ShoppingBag } from 'lucide-react';
 
 export default function DetailsPage() {
   const { id } = useParams();
@@ -11,6 +12,7 @@ export default function DetailsPage() {
   }
   const data = useDetails();
   const { cartItems, addToCart, removeFromCart } = useCartContextProvider();
+  const { toggleWishListButton, bucketItems } = useWishContextProvider();
 
   const backFunction = () => {
     navigate('/');
@@ -23,6 +25,7 @@ export default function DetailsPage() {
     navigate('/cart');
     addToCart(id !== undefined ? id : '');
   };
+
   return (
     <div className="card lg:card-side bg-base-100 shadow-2xl container mx-auto  mt-5 w-full ">
       {data && (
@@ -33,6 +36,26 @@ export default function DetailsPage() {
           <div className="card-body w-[50%]">
             <h2 className="card-title">{data.title}</h2>
             <p>{data.description}</p>
+            <div className="justify-end">
+              {bucketItems[id !== undefined ? id : ''] !== 0 ? (
+                <ShoppingBag
+                  onClick={() =>
+                    toggleWishListButton(id !== undefined ? id : '')
+                  }
+                  fill="white"
+                  stroke="gray"
+                  className="cursor-pointer"
+                />
+              ) : (
+                <ShoppingBag
+                  onClick={() =>
+                    toggleWishListButton(id !== undefined ? id : '')
+                  }
+                  className="cursor-pointer"
+                />
+              )}
+            </div>
+
             <div className="flex justify-around card-action ">
               <button
                 className="btn btn-ghost "
