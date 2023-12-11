@@ -1,4 +1,4 @@
-import { allData } from '../Data'
+import { allData } from '../db/Data'
 import { DataType } from '../types'
 
 export default function useDetails() {

@@ -22,6 +22,7 @@ export type propType = {
   url: string
   id: string
 }
+
 //Component types end
 
 //context types start
@@ -49,6 +50,14 @@ export type WishListType = {
   toggleWishlistStatus: boolean
   toggleWishListButton: (itemId: string) => void
   totalItems: () => number
+}
+
+export type CategoryType = {
+  isCategoryMenuOpen: boolean
+  setIsCategoryMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
+  sortData: DataType
+  option: number
+  setOption: React.Dispatch<React.SetStateAction<number>>
 }
 //context types end
 

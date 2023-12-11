@@ -1,4 +1,4 @@
-import SmallCard from './SmallCard';
+import SmallCard from './SmallCard'
 import {
   Navigation,
   Pagination,
@@ -6,12 +6,12 @@ import {
   A11y,
   Autoplay,
   Parallax,
-} from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/bundle';
+} from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/bundle'
 
-import { SmallCardData } from '../Data';
+import { SmallCardData } from '../db/Data'
 
 export default function CardCarousal() {
   return (
@@ -29,5 +29,5 @@ export default function CardCarousal() {
         </SwiperSlide>
       ))}
     </Swiper>
-  );
+  )
 }
