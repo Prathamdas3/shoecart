@@ -29,7 +29,11 @@ export default function Carousel() {
         <SwiperSlide>
           <div className="relative">
             <Link to={`/details/${data.id}`}>
-              <img src={data.url} alt={data.alt} className="w-full h-[25rem]" />
+              <img
+                src={data.url}
+                alt={data.alt}
+                className="w-full max-h-[98vh]"
+              />
               <span className="absolute bottom-0 left-5 z-10 text-white my-2">
                 <h2 className="text-lg font-bold">{data.title}</h2>
                 <p>{data.description}</p>
