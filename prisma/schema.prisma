@@ -1,0 +1,199 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Status {
+  COMPLETED
+  SHIPPED
+  PENDING
+}
+
+enum PaymentStatus {
+  TRANSIT
+  DELIVERED
+  PENDING
+}
+
+model User {
+  id        String    @id @default(cuid())
+  username  String    @unique
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+  addresses Address[]
+  orders    Order[]
+  reviews   Review[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  cart      Cart?     @relation(fields: [cartId], references: [id])
+  cartId    String    @unique
+}
+
+model Address {
+  id               String  @id @default(cuid())
+  country          String
+  full_name        String
+  mobile_number    Int
+  state            String
+  city             String
+  house_number     String
+  area             String
+  Landmark         String?
+  pincode          Int
+  default_address  Boolean
+  shipping_address Boolean
+  User             User?   @relation(fields: [userId], references: [id])
+  userId           String?
+  Order            Order[]
+}
+
+model Product {
+  id                 String               @id @default(cuid())
+  name               String
+  description        String
+  price              Float
+  stock              Int
+  image              String
+  OrderItems         OrderItems[]
+  reviews            Review[]
+  promotiontoproduct PromotionToProduct[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  @@map("product")
+}
+
+model Order {
+  id             String       @id @default(cuid())
+  order_date     DateTime
+  status         Status       @default(PENDING)
+  total_amount   Float
+  payment_method String
+  address        Address      @relation(fields: [addressId], references: [id])
+  User           User?        @relation(fields: [userId], references: [id])
+  userId         String?
+  addressId      String
+  orders         OrderItems[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  Coupons        Coupons?     @relation(fields: [couponsId], references: [id])
+  couponsId      String?
+}
+
+model OrderItems {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  quantity    Int
+  price       Float
+  product     Product  @relation(fields: [productId], references: [id])
+  Order       Order?   @relation(fields: [orderId], references: [id])
+  productId   String
+  orderId     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  comment   String
+  rating    Float
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  user      User?
+  cartItmes CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  quantity  Int
+  productId String
+  cratedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Cart      Cart?    @relation(fields: [cartId], references: [id])
+  cartId    String?
+}
+
+model Payment {
+  id             String   @id @default(cuid())
+  payment_date   DateTime
+  amount         Float
+  payment_method String
+  status         Status   @default(PENDING)
+  transaction_id String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Shipping {
+  id                      String        @id @default(cuid())
+  shipping_date           DateTime
+  carrier                 String
+  tracking_number         String        @unique
+  status                  PaymentStatus @default(PENDING)
+  estimated_delivery_date DateTime
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+}
+
+model Promotion {
+  id                      String               @id @default(cuid())
+  name                    String
+  description             String
+  discount_percentage     Float
+  discount_amount         Float
+  start_date              DateTime
+  end_date                DateTime
+  minimum_purchase_amount Float                @default(200)
+  promtiontoproduct       PromotionToProduct[]
+  createdAt               DateTime             @default(now())
+  updatedAt               DateTime             @updatedAt
+
+  @@map("promotion")
+}
+
+model Coupons {
+  id                      String   @id @default(cuid())
+  code                    String
+  description             String
+  discount_percentage     Float
+  discount_amount         Float
+  start_date              DateTime
+  end_date                DateTime
+  minimum_purchase_amount Float    @default(200)
+  max_users               Int?
+  orders                  Order[]
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+}
+
+model PromotionToProduct {
+  Promotion   Promotion @relation(fields: [promotionId], references: [id])
+  promotionId String
+  Product     Product   @relation(fields: [productId], references: [id])
+  productId   String
+
+  @@id([productId, promotionId])
+  @@map("promotiontoproduct")
+}
